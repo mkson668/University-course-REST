@@ -1,3 +1,9 @@
+
+## Project description
+
+The goal of this project is to provide a way to enable effective querying of the metadata from around the university campus. 
+This will involve working with courses, prerequisites, past course averages, room scheduling, and timetable creation. 
+
 ## Configuring your environment
 
 To start using this project, you need to get your computer configured so you can build and execute the code.
@@ -20,7 +26,3 @@ In the project folder:
 
 1. `yarn test` to run the test suite.
 
-## Running and testing from an IDE
-
-WebStorm should be automatically configured the first time you open the project.
-For other IDEs and editors, you'll want to set up test and debug tasks and specify that the schema of all files in `test/queries` should follow `test/query.schema.json`.
