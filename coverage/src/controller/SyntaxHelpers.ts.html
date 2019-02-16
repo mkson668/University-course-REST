@@ -1,0 +1,2117 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/controller/SyntaxHelpers.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/controller</a> SyntaxHelpers.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">72.82% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>284/390</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">70.87% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>253/357</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>12/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">72.82% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>284/390</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">83x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">83x</span>
+<span class="cline-any cline-yes">83x</span>
+<span class="cline-any cline-yes">81x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">183x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">48x</span>
+<span class="cline-any cline-yes">48x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">88x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">88x</span>
+<span class="cline-any cline-yes">88x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">108x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-yes">98x</span>
+<span class="cline-any cline-yes">56x</span>
+<span class="cline-any cline-yes">56x</span>
+<span class="cline-any cline-yes">56x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">56x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">55x</span>
+<span class="cline-any cline-yes">134x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">116x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42x</span>
+<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">46x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">61x</span>
+<span class="cline-any cline-yes">61x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">61x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">61x</span>
+<span class="cline-any cline-yes">61x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">58x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">220x</span>
+<span class="cline-any cline-yes">220x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">203x</span>
+<span class="cline-any cline-yes">203x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">203x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">198x</span>
+<span class="cline-any cline-yes">198x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">198x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">332x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">67x</span>
+<span class="cline-any cline-yes">265x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">265x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export class SyntaxHelpers {
+    // private validSyntax: boolean;
+    private alreadyWhere: boolean;
+    private alreadyOptions: boolean;
+    private alreadyTransform: boolean;
+    private dataset: string;
+    private columns: string[];
+    private groups: string[];
+    private isCourse: boolean;
+    private columnApplyKeys: any[];
+&nbsp;
+    constructor() {
+        // this.validSyntax = true;
+        this.alreadyWhere = false;     // TODO update code
+        this.alreadyOptions = false;
+        this.alreadyTransform = false;
+        this.dataset = null;
+        this.columns = [];
+        this.groups = [];
+        this.isCourse = null;
+        this.columnApplyKeys = [];
+    }
+&nbsp;
+    // TODO: Remove double checking of order fields
+    public checkSyntax(query: any, key: any): boolean {
+        if (key === "WHERE") {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof query !== "object" || Array.isArray(query) || this.alreadyWhere) {
+<span class="cstat-no" title="statement not covered" >                return false;</span>
+            } else {
+                this.alreadyWhere = true;
+                for (let key1 in query) {
+                    if (!this.checkSyntax(query[key1], key1)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        switch (key) {
+            case "AND":
+                if (Array.isArray(query) &amp;&amp; query.length &gt; 0) {
+                    for (let comparatorQuery of query) {
+                        for (let key2 in comparatorQuery) {
+                            if (!this.checkSyntax(comparatorQuery[key2], key2)) { // comparatorQuery to comparator[key2]
+                                return false;
+                            }
+                        }
+                    }
+                } else {
+                    return false;
+                }
+                break;
+            case "OR":
+                if (Array.isArray(query) &amp;&amp; query.length &gt; 0) {
+                    for (let comparatorQuery of query) {
+                        for (let key2 in comparatorQuery) {
+                            if (!this.checkSyntax(comparatorQuery[key2], key2)) { // comparatorQuery to comparator[key2]
+                                return false;
+                            }
+                        }
+                    }
+                } else {
+                    return false;
+                }
+                break;
+            case "LT":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof query !== "object" || Array.isArray(query) || Object.keys(query).length !== 1) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                for (let key3 in query) {
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (typeof key3 === "string") {
+                        if (!this.terminatingKeyNum(key3)) {
+                            return false;
+                        }
+                        if (typeof query[key3] !== "number") {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    } else  {
+<span class="cstat-no" title="statement not covered" >                        return false;</span>
+                    }
+                }
+<span class="cstat-no" title="statement not covered" >                break;</span>
+            case "GT":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof query !== "object" || Array.isArray(query) || Object.keys(query).length !== 1) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                for (let key3 in query) {
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (typeof key3 === "string") {
+                        if (!this.terminatingKeyNum(key3)) {
+                            return false;
+                        }
+                        if (typeof query[key3] !== "number") {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        return false;</span>
+                    }
+                }
+<span class="cstat-no" title="statement not covered" >                break;</span>
+            case "EQ":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof query !== "object" || Array.isArray(query) || Object.keys(query).length !== 1) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                for (let key3 in query) {
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (typeof key3 === "string") {
+                        if (!this.terminatingKeyNum(key3)) {
+                            return false;
+                        }
+                        <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof query[key3] !== "number") {
+<span class="cstat-no" title="statement not covered" >                            return false;</span>
+                        } else {
+                            return true;
+                        }
+                    } else  {
+<span class="cstat-no" title="statement not covered" >                        return false;</span>
+                    }
+                }
+<span class="cstat-no" title="statement not covered" >                break;</span>
+            case "IS":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof query !== "object" || Array.isArray(query) || Object.keys(query).length !== 1) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                for (let key3 in query) {
+                    if (typeof query[key3] !== "string") {
+                        return false;
+                    }
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (typeof key3 === "string") {
+                        if (!this.terminatingKeyString(key3, query)) {
+                            return false;
+                        }
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        return false;</span>
+                    }
+                }
+                break;
+            case "NOT":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof query !== "object" || Array.isArray(query) || Object.keys(query).length !== 1) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                for (let key1 in query) {
+                    <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkSyntax(query[key1], key1)) {
+<span class="cstat-no" title="statement not covered" >                        return false;</span>
+                    }
+                }
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+&nbsp;
+    public checkOptionsSyntax(query: any, key: any): boolean {
+        let columnsGuard: boolean = false;
+        let orderGuard: boolean = false;
+        let transGuard: boolean = false;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (key === "OPTIONS") {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof query !== "object" || Array.isArray(query) || this.alreadyOptions) {
+<span class="cstat-no" title="statement not covered" >                return false;</span>
+            }
+            if (Object.keys(query).length === 0) {
+                return false;
+            }
+            this.alreadyOptions = true;
+            for (let key1 in query) {
+                    if (key1 === "COLUMNS") {
+                        <span class="missing-if-branch" title="else path not taken" >E</span>if (!columnsGuard &amp;&amp; !orderGuard &amp;&amp; !transGuard) {
+                            columnsGuard = true;
+                            <span class="missing-if-branch" title="if path not taken" >I</span>if (!Array.isArray(query[key1])) {
+<span class="cstat-no" title="statement not covered" >                                return false;</span>
+                            }
+                            if (query[key1].length === 0) {
+                                return false;
+                            }
+                            for (let i of query[key1]) {
+                                if (!this.terminatingOptions(i)) {
+                                    // not a key so check if its self defined key
+                                    if (i.indexOf("_") !== -1) {
+                                        return false;
+                                    } else {
+                                        this.columnApplyKeys.push({name: i, seen: false});
+                                        this.columns.push(i);
+                                    }
+                                } else {
+                                    this.columns.push(i);
+                                }
+                            }
+                        } else {
+<span class="cstat-no" title="statement not covered" >                            return false;</span>
+                        }
+                    } else if (key1 === "ORDER") {
+                        <span class="missing-if-branch" title="else path not taken" >E</span>if (!orderGuard &amp;&amp; columnsGuard &amp;&amp; !transGuard) {
+                            orderGuard = true;
+                            if (typeof query[key1] === "string" &amp;&amp; this.columns.includes(query[key1])) {
+                                if (!this.terminatingOptions(query[key1])) {
+                                    <span class="missing-if-branch" title="if path not taken" >I</span>if (query[key1].indexOf("_") !== -1) {
+<span class="cstat-no" title="statement not covered" >                                        return false;</span>
+                                    }
+                                    <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.columns.includes(query[key1])) {
+<span class="cstat-no" title="statement not covered" >                                        return false;</span>
+                                    }
+                                }
+                                // continue to transformations or return true
+                            } else if (typeof query[key1] === "object") {
+                                let orderKeys: any[] = Object.keys(query[key1]);
+                                <span class="missing-if-branch" title="else path not taken" >E</span>if (orderKeys.length === 2 &amp;&amp; orderKeys[0] === "dir" &amp;&amp; orderKeys[1] === "keys") {
+                                    <span class="missing-if-branch" title="else path not taken" >E</span>if (query[key1]["dir"] === "UP" || query[key1]["dir"] === "DOWN") {
+                                        <span class="missing-if-branch" title="else path not taken" >E</span>if (Array.isArray(query[key1]["keys"]) &amp;&amp; query[key1]["keys"].length &gt; 0) {
+                                            for (let key2 of query[key1]["keys"]) {
+                                                if (!this.columns.includes(key2)) {
+                                                    return false;
+                                                }
+                                                let validity: boolean = this.terminatingOptions(key2);
+                                                // changed from key to key2
+                                                if (!validity) {
+                                                    <span class="missing-if-branch" title="if path not taken" >I</span>if (key2.indexOf("_") !== -1) {
+<span class="cstat-no" title="statement not covered" >                                                        return false;</span>
+                                                    }
+                                                }
+                                            }
+                                        } else {
+<span class="cstat-no" title="statement not covered" >                                            return false;</span>
+                                        }
+                                    } else {
+<span class="cstat-no" title="statement not covered" >                                        return false;</span>
+                                    }
+                                } else {
+<span class="cstat-no" title="statement not covered" >                                    return false;</span>
+                                }
+                            } else {
+                                return false;
+                            }
+                        } else {
+<span class="cstat-no" title="statement not covered" >                            return false;</span>
+                        }
+                    } else {
+                        return false;
+                    }
+            }
+            return true;
+        }
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+    public checkTransformSyntax(query: any): boolean {
+        let groupGuard: boolean = false;
+        let applyGuard: boolean = false;
+        let alreadyGroup: boolean = false;
+        let alreadyApply: boolean = false;
+        this.alreadyTransform = true;
+        for (let key1 in query) {
+            if (key1 === "GROUP") {
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (!groupGuard) {
+                    groupGuard = true;
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (Array.isArray(query["GROUP"]) &amp;&amp; query["GROUP"].length &gt; 0 &amp;&amp; alreadyGroup === false) {
+                        alreadyGroup = true;
+                        for (let group of query["GROUP"]) {
+                            let validity: boolean = this.terminatingOptions(group);
+                            <span class="missing-if-branch" title="if path not taken" >I</span>if (!validity) {
+<span class="cstat-no" title="statement not covered" >                                return false;</span>
+                            }
+                            this.groups.push(group);
+                        }
+                        for (let col of this.columns) {
+                            if (col.indexOf("_") !== -1) {
+                                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.groups.includes(col)) {
+<span class="cstat-no" title="statement not covered" >                                    return false;</span>
+                                }
+                            }
+                        }
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        return false;</span>
+                    }
+                } else {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+            } else <span class="missing-if-branch" title="else path not taken" >E</span>if (key1 === "APPLY") {
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (!applyGuard) {
+                    applyGuard = true;
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (Array.isArray(query["APPLY"]) &amp;&amp; alreadyApply === false) {
+                        alreadyApply = true;
+                        for (let applyObject of query["APPLY"]) {
+                            <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkApplyObject(applyObject)) {
+<span class="cstat-no" title="statement not covered" >                                return false;</span>
+                            }
+                            <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkInnerApply(applyObject)) {
+<span class="cstat-no" title="statement not covered" >                                return false;</span>
+                            }
+                        }
+                        for (let obj of this.columnApplyKeys) {
+                            <span class="missing-if-branch" title="if path not taken" >I</span>if (!obj["seen"]) {
+<span class="cstat-no" title="statement not covered" >                                return false;</span>
+                            }
+                        }
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        return false;</span>
+                    }
+                } else {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+            } else {
+<span class="cstat-no" title="statement not covered" >                return false;</span>
+            }
+        }
+        return true;
+    }
+&nbsp;
+    public checkApplyObject(applyObject: any): boolean {
+        let keyArray: any[] = Object.keys(applyObject);
+        for (let key of keyArray) {
+            for (let obj of this.columnApplyKeys) {
+                if (obj["name"] === key) {
+                    <span class="missing-if-branch" title="if path not taken" >I</span>if (obj["seen"] === true) {
+<span class="cstat-no" title="statement not covered" >                        return false;</span>
+                    } else {
+                        obj["seen"] = true;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+&nbsp;
+    public checkInnerApply(applyObject: any): boolean {
+        let keyArray: any[] = Object.keys(applyObject);
+        for (let key of keyArray) {
+            let innerObject: any = applyObject[key];
+            let innerKeyArray: any[] = Object.keys(innerObject);
+            for (let innerKey of innerKeyArray) {
+                switch (innerKey) {
+                    case "AVG":
+                    <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.terminatingKeyNum(innerObject[innerKey])) {
+<span class="cstat-no" title="statement not covered" >                        return false;</span>
+                    }
+                    break;
+                    case "MAX":
+                        <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.terminatingKeyNum(innerObject[innerKey])) {
+<span class="cstat-no" title="statement not covered" >                            return false;</span>
+                        }
+                        break;
+<span class="branch-2 cbranch-no" title="branch not covered" >                    case "MIN":</span>
+<span class="cstat-no" title="statement not covered" >                        if (!this.terminatingKeyNum(innerObject[innerKey])) {</span>
+<span class="cstat-no" title="statement not covered" >                            return false;</span>
+                        }
+<span class="cstat-no" title="statement not covered" >                        break;</span>
+                    case "COUNT":
+                        <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.terminatingKeyNum(innerObject[innerKey])) {
+<span class="cstat-no" title="statement not covered" >                            if (!this.terminatingKeyString(innerObject[innerKey], "dummy value")) {</span>
+<span class="cstat-no" title="statement not covered" >                                return false;</span>
+                            }
+                        }
+                        break;
+                    case "SUM":
+                        <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.terminatingKeyNum(innerObject[innerKey])) {
+<span class="cstat-no" title="statement not covered" >                            return false;</span>
+                        }
+                        break;
+<span class="branch-5 cbranch-no" title="branch not covered" >                    default:</span>
+<span class="cstat-no" title="statement not covered" >                        return false;</span>
+                }
+            }
+        }
+        return true;
+    }
+&nbsp;
+    public terminatingKeyNum(key: string): boolean {
+        let underPos = key.indexOf("_");
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (underPos === -1) {
+<span class="cstat-no" title="statement not covered" >            return false;</span>
+        }
+        if (this.dataset !== null) {
+            let keyDataset = key.substring(0, underPos);
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (keyDataset !== this.dataset) {
+<span class="cstat-no" title="statement not covered" >                return false;</span>
+            }
+        } else {
+            this.dataset = key.substring(0, underPos);
+        }
+        let queryKey: string = key.substring(underPos + 1, key.length);
+        switch (queryKey) {
+            case "avg":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "pass":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "fail":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "audit":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "year":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "lat":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "lon":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "seats":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+&nbsp;
+    private terminatingKeyString(key: string, query: any): boolean {
+        let underPos = key.indexOf("_");
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (underPos === -1) {
+<span class="cstat-no" title="statement not covered" >            return false;</span>
+        }
+        if (this.dataset !== null) {
+            let keyDataset = key.substring(0, underPos);
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (keyDataset !== this.dataset) {
+<span class="cstat-no" title="statement not covered" >                return false;</span>
+            }
+        } else {
+            this.dataset = key.substring(0, underPos);
+        }
+        let queryKey: string = key.substring(underPos + 1, key.length);
+        let stringVal: string = query[key];
+        // TODO: verify below is correct; looks strange
+        if (stringVal.indexOf("*", 1) !== stringVal.length - 1 &amp;&amp;
+            stringVal.indexOf("*", 1) !== -1) {
+            return false;
+        }
+        switch (queryKey) {
+            case "dept":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+<span class="branch-1 cbranch-no" title="branch not covered" >            case "id":</span>
+<span class="cstat-no" title="statement not covered" >                if (!this.checkIsCourse(true)) {</span>
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+<span class="cstat-no" title="statement not covered" >                break;</span>
+            case "instructor":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "title":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "uuid":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "fullname":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "shortname":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "number":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "name":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "address":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "type":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "furniture":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "href":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+<span class="branch-13 cbranch-no" title="branch not covered" >            case "lat":</span>
+<span class="cstat-no" title="statement not covered" >                if (!this.checkIsCourse(false)) {</span>
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+<span class="cstat-no" title="statement not covered" >                break;</span>
+<span class="branch-14 cbranch-no" title="branch not covered" >            case "lon":</span>
+<span class="cstat-no" title="statement not covered" >                if (!this.checkIsCourse(false)) {</span>
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+<span class="cstat-no" title="statement not covered" >                break;</span>
+<span class="branch-15 cbranch-no" title="branch not covered" >            case "seats":</span>
+<span class="cstat-no" title="statement not covered" >                if (!this.checkIsCourse(false)) {</span>
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+<span class="cstat-no" title="statement not covered" >                break;</span>
+<span class="branch-16 cbranch-no" title="branch not covered" >            default:</span>
+<span class="cstat-no" title="statement not covered" >                return false;</span>
+        }
+        return true;
+    }
+&nbsp;
+    private terminatingOptions(column: string): boolean {
+        let underPos = column.indexOf("_");
+        if (underPos === -1) {
+            return false;
+        }
+        let keyDataset = column.substring(0, underPos);
+        if (this.dataset === null) {
+            this.dataset = keyDataset;
+        }
+        if (keyDataset !== this.dataset) {
+            return false;
+        }
+        let queryKey: string = column.substring(underPos + 1, column.length);
+        switch (queryKey) {
+            case "dept":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "id":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "instructor":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "title":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "uuid":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "avg":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "pass":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "fail":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "audit":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "year":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(true)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "fullname":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "shortname":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "number":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "name":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "address":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "type":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "furniture":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "href":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "lat":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "lon":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+            case "seats":
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.checkIsCourse(false)) {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+                break;
+<span class="branch-21 cbranch-no" title="branch not covered" >            default:</span>
+<span class="cstat-no" title="statement not covered" >                return false;</span>
+        }
+        return true;
+    }
+&nbsp;
+    public returnCurrentDatasetID(): string {
+        return this.dataset;
+    }
+&nbsp;
+    public returnApplyKeys(): any[] {
+        return this.columnApplyKeys;
+    }
+&nbsp;
+    /*public getApplyKeys(): any[] {
+        return this.dataset;
+    }*/
+&nbsp;
+    public checkIsCourse(expected: boolean): boolean {
+        if (this.isCourse === null) {
+            this.isCourse = expected;
+            return true;
+        } else <span class="missing-if-branch" title="if path not taken" >I</span>if (this.isCourse !== expected) {
+<span class="cstat-no" title="statement not covered" >            return false;</span>
+        } else {
+            return true;
+        }
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Oct 29 2018 17:07:16 GMT-0700 (PDT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

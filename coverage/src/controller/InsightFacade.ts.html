@@ -1,0 +1,1400 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/controller/InsightFacade.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/controller</a> InsightFacade.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">89.26% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>241/270</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>84/105</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">85.71% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>18/21</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">89.26% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>241/270</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">17843x</span>
+<span class="cline-any cline-yes">17843x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17843x</span>
+<span class="cline-any cline-yes">17843x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17843x</span>
+<span class="cline-any cline-yes">17834x</span>
+<span class="cline-any cline-yes">17834x</span>
+<span class="cline-any cline-yes">193836x</span>
+<span class="cline-any cline-yes">73863x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">73863x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">119973x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">119973x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">74x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">74x</span>
+<span class="cline-any cline-yes">74x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">74x</span>
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-yes">364x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">74x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">85x</span>
+<span class="cline-any cline-yes">155x</span>
+<span class="cline-any cline-yes">83x</span>
+<span class="cline-any cline-yes">83x</span>
+<span class="cline-any cline-yes">83x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">72x</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">45x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Log from "../Util";
+import {IInsightFacade, InsightDataset, InsightDatasetKind, InsightError, NotFoundError} from "./IInsightFacade";
+import {Section} from "./Section";
+import {SyntaxHelpers} from "./SyntaxHelpers";
+import {ParseQueryHelper} from "./ParseQueryHelper";
+import {IFilter} from "./IFilter";
+import {ResultHelper} from "./ResultHelper";
+import {InsightDataHelper} from "./InsightDataHelper";
+import {Room} from "./Room";
+import {BuildingHelper} from "./BuildingHelper";
+&nbsp;
+let fs = require("fs");
+let util = require ("util");
+let JSZip = require("jszip");
+let parse5 = require("parse5");
+&nbsp;
+/**
+ * This is the main programmatic entry point for the project.
+ * Method documentation is in IInsightFacade
+ *
+ */
+export default class InsightFacade implements IInsightFacade {
+    private datasetMap: object;
+    private datasetIDs: any;
+&nbsp;
+    constructor() {
+        Log.trace("InsightFacadeImpl::init()");
+        this.datasetMap = {};
+        this.datasetIDs = [];
+    }
+&nbsp;
+    public addDataset(id: string, content: string, kind: InsightDatasetKind): Promise&lt;string[]&gt; {
+        // TODO this is missing check for if the dataset id exists when adding to datasets.txt
+            let zip: any = new JSZip();
+            let that: any = this;
+            return new Promise(function (fulfill, reject) {
+                if (kind === InsightDatasetKind.Courses) {
+                    <span class="missing-if-branch" title="if path not taken" >I</span>if (!fs.existsSync("./data/")) {
+<span class="cstat-no" title="statement not covered" >                        fs.mkdirSync("./data/");</span>
+                    }
+                    if (content === undefined || content === null || content === "") {
+                        return reject(new InsightError("cannot be null, undefined, or empty string as content"));
+                    }
+                    <span class="missing-if-branch" title="if path not taken" >I</span>if (id === undefined || id === null || id === "") {
+<span class="cstat-no" title="statement not covered" >                        return reject(new InsightError("cannot be null, undefined, or empty string as id"));</span>
+                    }
+                    // check if file exists, if it exists then load it, if it does not then create it
+                    if (fs.existsSync("./data/" + "added" + ".txt")) {
+                        let idCheckArray: any = fs.readFileSync("./data/added.txt", "utf-8");
+                        if (idCheckArray.includes(" " + id + " ")) {
+                            return reject(new InsightError("dataset id already exists"));
+                        }
+                    }
+&nbsp;
+                    zip.loadAsync(content, {base64: true}).then(function (result: any) {
+                        zip = result;
+                        let sectionsArray: Section[] = [];
+                        let promiseArray: any = [];
+                        zip.folder("courses").forEach(function (relativePath: any, file: any) {
+                            let validJSON: boolean = true;
+                            promiseArray.push(file.async("string").then(function (text: any) {
+                                let parseText: any;
+                                try {
+                                    parseText = JSON.parse(text);
+                                } catch (e) {
+                                    // return reject(new InsightError("JSON.parse doesn't not work"));
+                                    validJSON = false;
+                                }
+                                if (validJSON) {
+                                    let allSections: any = parseText["result"];
+                                    for (let section of allSections) {
+                                        if (section["Section"] === "overall") {
+                                            let oneSection: Section = new Section(section["Subject"],
+                                                section["Course"],
+                                                section["Avg"],
+                                                section["Professor"],
+                                                section["Title"],
+                                                section["Pass"],
+                                                section["Fail"],
+                                                section["Audit"],
+                                                section["id"],
+                                                "1900"); // case for 1900 section
+                                            sectionsArray.push(oneSection);
+                                        } else {
+                                            let oneSection: Section = new Section(section["Subject"],
+                                                section["Course"],
+                                                section["Avg"],
+                                                section["Professor"],
+                                                section["Title"],
+                                                section["Pass"],
+                                                section["Fail"],
+                                                section["Audit"],
+                                                section["id"],
+                                                section["Year"]);
+                                            sectionsArray.push(oneSection);
+                                        }
+                                    }
+                                }
+                            }));
+                        });
+                        Promise.all(promiseArray).then(function (results) {
+                            if (sectionsArray.length === 0) {
+                                return reject(new InsightError("no valid sections in this dataset!"));
+                            }
+                            that.datasetMap[id] = sectionsArray;
+                            let toStoreDatasetMap: string = JSON.stringify(sectionsArray);
+                            fs.writeFileSync("./data/" + id + ".txt", toStoreDatasetMap);
+                            let addedExists: boolean = fs.existsSync("./data/added.txt");
+                            let allIDs: string;
+                            if (addedExists) {
+                                let oldIDs: any = fs.readFileSync("./data/added.txt", "utf-8");
+                                allIDs = oldIDs + id + " ";
+                            } else {
+                                allIDs = " " + id + " ";
+                            }
+                            fs.writeFileSync("./data/" + "added" + ".txt", allIDs);
+                            allIDs = allIDs.substring(0, allIDs.length - 1); // take of erroneous last white space
+                            let idArray: any = [];
+                            let ind: number = 0;
+                            while (ind &lt; allIDs.length &amp;&amp; ind !== -1) {
+                                ind = allIDs.indexOf(" ", ind);
+                                let nextInd: number = allIDs.indexOf(" ", ind + 2);
+                                if (nextInd === -1) {
+                                    nextInd = allIDs.length;
+                                }
+                                let sub: string = allIDs.substring(ind + 1, nextInd);
+                                idArray.push(sub);
+                                ind = allIDs.indexOf(" ", ind + 1);
+                            }
+                            // Insight Dataset
+                            let insightDataHelper: InsightDataHelper = new InsightDataHelper();
+                            let datasetToAdd: InsightDataset =
+                                insightDataHelper.createInsightDataset(id, kind, sectionsArray.length);
+                            if (fs.existsSync("./data/" + "datasets" + ".txt")) {
+                                let oldDatasets: any = fs.readFileSync("./data/" + "datasets" + ".txt", "utf-8");
+                                let jsonObj: any = JSON.parse(oldDatasets);
+                                let arrayOfDatasets: InsightDataset[] = jsonObj;
+                                arrayOfDatasets.push(datasetToAdd);
+                                let newJsonObj = JSON.stringify(arrayOfDatasets);
+                                fs.writeFileSync("./data/" + "datasets" + ".txt", newJsonObj);
+                                let arrayOfNames: string[] = [];
+                                for (let dset of arrayOfDatasets) {
+                                    arrayOfNames.push(dset.id);
+                                }
+                                fulfill(arrayOfNames);
+                            } else {
+                                let arrayOfDatasets: InsightDataset[] = [];
+                                arrayOfDatasets.push(datasetToAdd);
+                                let newJsonObj = JSON.stringify(arrayOfDatasets);
+                                fs.writeFileSync("./data/" + "datasets" + ".txt", newJsonObj);
+                                let arrayOfNames: string[] = [];
+                                for (let dset of arrayOfDatasets) {
+                                    arrayOfNames.push(dset.id);
+                                }
+                                fulfill(arrayOfNames);
+                            }
+                            // fulfill(arrayOfNames);
+                        });
+                    }).catch(function (error: any) {
+                        return reject(new InsightError("loadAsync is not working"));
+                    });
+                } else <span class="missing-if-branch" title="else path not taken" >E</span>if (kind === InsightDatasetKind.Rooms) {
+                    // do stuff
+                    <span class="missing-if-branch" title="if path not taken" >I</span>if (!fs.existsSync("./data/")) {
+<span class="cstat-no" title="statement not covered" >                        fs.mkdirSync("./data/");</span>
+                    }
+                    <span class="missing-if-branch" title="if path not taken" >I</span>if (content === undefined || content === null || content === "") {
+<span class="cstat-no" title="statement not covered" >                        return reject(new InsightError("cannot be null, undefined, or empty string as content"));</span>
+                    }
+                    <span class="missing-if-branch" title="if path not taken" >I</span>if (id === undefined || id === null || id === "") {
+<span class="cstat-no" title="statement not covered" >                        return reject(new InsightError("cannot be null, undefined, or empty string as id"));</span>
+                    }
+                    // check if file exists, if it exists then load it, if it does not then create it
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (fs.existsSync("./data/" + "added" + ".txt")) {
+                        let idCheckArray: any = fs.readFileSync("./data/added.txt", "utf-8");
+                        <span class="missing-if-branch" title="if path not taken" >I</span>if (idCheckArray.includes(" " + id + " ")) {
+<span class="cstat-no" title="statement not covered" >                            return reject(new InsightError("dataset id already exists"));</span>
+                        }
+                    }
+                    zip.loadAsync(content, {base64: true}).then(function (result: any) {
+                        zip = result;
+                        let roomsArray: string[] = [];
+                        let buildHelper: BuildingHelper = new BuildingHelper();
+                        zip.file("index.htm").async("string").then(function (data: any) {
+                            let roomsData: any = data;
+                            let trArray: any;
+                            let parsedHTML: any = parse5.parse(roomsData);
+                            trArray = buildHelper.getTrElements(parsedHTML,
+                                "table",
+                                "class",
+                                "views-table cols-5 table",
+                                "tbody");
+                            let tbody: any = trArray;
+                            buildHelper.getBuildings(tbody).then(function (arrayOfBs) {
+                                let arrayOfBuildings = arrayOfBs;  // buildings completed; now go to rooms
+                                let promBuildingArray: any = [];
+                                for (let building of arrayOfBuildings) {
+                                    promBuildingArray.push(zip.file(building.href.substring(2, building.href.length))
+                                        .async("string"));
+                                }
+                                Promise.all(promBuildingArray).then(function (results) {
+                                    let allRooms: any[] = [];
+                                    let index: number = 0;
+                                    let arrayOfRoomsInBuild: Room[] = [];
+                                    for (let buildingFile of results) {
+                                        let parsedRoomHTML: any = parse5.parse(buildingFile);
+                                        let trRoomArray: any = buildHelper.getTrElements(parsedRoomHTML,
+                                            "table",
+                                            "class",
+                                            "views-table cols-5 table",
+                                            "tbody");
+                                        if (trRoomArray !== false) {
+                                            let arrayOfRooms: Room[] = buildHelper.getRoomData(trRoomArray,
+                                                arrayOfBuildings[index].shortName,
+                                                arrayOfBuildings[index].fullName,
+                                                arrayOfBuildings[index].address,
+                                                arrayOfBuildings[index].lat,
+                                                arrayOfBuildings[index].lon);
+                                            for (let room of arrayOfRooms) {
+                                                allRooms.push(room);
+                                            }
+                                        }
+                                        index++;
+                                    }
+                                    <span class="missing-if-branch" title="if path not taken" >I</span>if (allRooms.length === 0) {
+<span class="cstat-no" title="statement not covered" >                                        return reject(new InsightError("no valid rooms in this room dataset!"));</span>
+                                    }
+                                    that.datasetMap[id] = allRooms;
+                                    let toStoreDatasetMap: string = JSON.stringify(allRooms);
+                                    fs.writeFileSync("./data/" + id + ".txt", toStoreDatasetMap);
+                                    let addedExists: boolean = fs.existsSync("./data/added.txt");
+                                    let allIDs: string;
+                                    <span class="missing-if-branch" title="else path not taken" >E</span>if (addedExists) {
+                                        let oldIDs: any = fs.readFileSync("./data/added.txt", "utf-8");
+                                        allIDs = oldIDs + id + " ";
+                                    } else {
+<span class="cstat-no" title="statement not covered" >                                        allIDs = " " + id + " ";</span>
+                                    }
+                                    fs.writeFileSync("./data/" + "added" + ".txt", allIDs);
+                                    allIDs = allIDs.substring(0, allIDs.length - 1);
+                                    let idArray: any = [];
+                                    let ind: number = 0;
+                                    while (ind &lt; allIDs.length &amp;&amp; ind !== -1) {
+                                        ind = allIDs.indexOf(" ", ind);
+                                        let nextInd: number = allIDs.indexOf(" ", ind + 2);
+                                        <span class="missing-if-branch" title="else path not taken" >E</span>if (nextInd === -1) {
+                                            nextInd = allIDs.length;
+                                        }
+                                        let sub: string = allIDs.substring(ind + 1, nextInd);
+                                        idArray.push(sub);
+                                        ind = allIDs.indexOf(" ", ind + 1);
+                                    }
+                                    // Insight Dataset
+                                    let insightDataHelper: InsightDataHelper = new InsightDataHelper();
+                                    let datasetToAdd: InsightDataset =
+                                        insightDataHelper.createInsightDataset(id, kind, allRooms.length);
+                                    <span class="missing-if-branch" title="else path not taken" >E</span>if (fs.existsSync("./data/" + "datasets" + ".txt")) {
+                                        let oldDatasets: any = fs.readFileSync("./data/" + "datasets" + ".txt",
+                                            "utf-8");
+                                        let jsonObj: any = JSON.parse(oldDatasets);
+                                        let arrayOfDatasets: InsightDataset[] = jsonObj;
+                                        arrayOfDatasets.push(datasetToAdd);
+                                        let newJsonObj = JSON.stringify(arrayOfDatasets);
+                                        fs.writeFileSync("./data/" + "datasets" + ".txt", newJsonObj);
+                                        let arrayOfNames: any[] = [];
+                                        for (let dset of arrayOfDatasets) {
+                                            arrayOfNames.push(dset.id);
+                                        }
+                                        fulfill(arrayOfNames);
+                                    } else {
+                                        let arrayOfDatasets: InsightDataset[] = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >                                        arrayOfDatasets.push(datasetToAdd);</span>
+                                        let newJsonObj = <span class="cstat-no" title="statement not covered" >JSON.stringify(arrayOfDatasets);</span>
+<span class="cstat-no" title="statement not covered" >                                        fs.writeFileSync("./data/" + "datasets" + ".txt", newJsonObj);</span>
+                                        let arrayOfNames: any[] = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >                                        for (let dset of arrayOfDatasets) {</span>
+<span class="cstat-no" title="statement not covered" >                                            arrayOfNames.push(dset.id);</span>
+                                        }
+                                        let arrayId = <span class="cstat-no" title="statement not covered" >arrayOfNames;</span>
+<span class="cstat-no" title="statement not covered" >                                        fulfill(arrayOfNames);</span>
+                                    }
+                                    // fulfill(idArray);
+                                }).catch(<span class="fstat-no" title="function not covered" >function (</span>err) {
+<span class="cstat-no" title="statement not covered" >                                    reject(new InsightError(err));</span>
+                                });
+                                // fulfill(roomsArray);
+                            }).catch(<span class="fstat-no" title="function not covered" >function (</span>err)  {
+<span class="cstat-no" title="statement not covered" >                                reject(err);</span>
+                            });
+                        }).catch(<span class="fstat-no" title="function not covered" >function (</span>error: any) {
+<span class="cstat-no" title="statement not covered" >                            return reject(new InsightError("parse5 error"));</span>
+                        });
+                    });
+                } else {
+<span class="cstat-no" title="statement not covered" >                    return reject(new InsightError("invalid kind"));</span>
+                }
+            });
+    }
+&nbsp;
+    public removeDataset(id: string): Promise&lt;string&gt; {
+        let that: any = this;
+        return new Promise&lt;string&gt;(function (fulfill, reject) {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (id === undefined || id === null || id === "") {
+<span class="cstat-no" title="statement not covered" >                return reject(new InsightError("null, undefined, empty string ids are not permitted"));</span>
+            }
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (!fs.existsSync("./data/added.txt")) {
+<span class="cstat-no" title="statement not covered" >                return reject(new InsightError("added id's file has been removed cannot continue"));</span>
+            } else {
+                let idCheckString: any = fs.readFileSync("./data/added.txt", "utf-8");
+                if (!idCheckString.includes(" " + id + " ")) {
+                    return reject(new NotFoundError("this id was not a added dataset"));
+                } else {
+                    let trimmedCheckString: string = idCheckString.replace( " " + id + " ", " ");
+                    fs.writeFileSync("./data/added.txt", trimmedCheckString);
+                    fs.unlinkSync("./data/" + id + ".txt");
+                    // delete from cache
+                    delete that.datasetMap[id];
+                    let map: any = that.datasetMap;
+&nbsp;
+                    // Insight Dataset maintenance
+                    let oldDatasets: string = fs.readFileSync("./data/" + "datasets" + ".txt", "utf-8");
+                    let arrayOfDatasets: any = JSON.parse(oldDatasets);
+                    for (let x = 0; x &lt; arrayOfDatasets.length; x++) {
+                        <span class="missing-if-branch" title="else path not taken" >E</span>if (arrayOfDatasets[x].id === id) {
+                            arrayOfDatasets.splice(x, 1);
+                            let newArrayOfDatasets: any = arrayOfDatasets;
+                            let newJsonObj: any = JSON.stringify(newArrayOfDatasets);
+                            fs.writeFileSync("./data/" + "datasets" + ".txt", newJsonObj);
+                        }
+                    }
+                    fulfill(id);
+                }
+            }
+        });
+    }
+&nbsp;
+    public performQuery(query: any): Promise &lt;any[]&gt; {
+        let that: any = this;
+        return new Promise&lt;any[]&gt;(function (fulfill, reject) {
+            let currentDatasetId: string = "";
+            let syntaxhelper: SyntaxHelpers = new SyntaxHelpers();
+            let whereFlag: boolean = false;
+            let optionsFlag: boolean = false;
+            let transFlag: boolean = false;
+            let transValidity: boolean = false;
+            let whereValidity: boolean = false;
+            let optionsValidity: boolean = false;
+            let applyKeys: any[] = null;
+            for (let key in query) {
+                if (key === "WHERE") {
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (!whereFlag) {
+                        whereValidity = syntaxhelper.checkSyntax(query[key], key);
+                        if (!whereValidity) {
+                            return reject(new InsightError("Body format is incorrect"));
+                        }
+                        whereFlag = true;
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        return reject(new InsightError("Multiple bodies or options"));</span>
+                    }
+                } else if (key === "OPTIONS") {
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (!optionsFlag) {
+                        optionsValidity = syntaxhelper.checkOptionsSyntax(query[key], key);
+                        if (!optionsValidity) {
+                            return reject(new InsightError("Options not valid"));
+                        }
+                        optionsFlag = true;
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        return reject(new InsightError("Multiple bodies or options"));</span>
+                    }
+                } else if (key === "TRANSFORMATIONS") {
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (!transFlag) {
+                        transValidity = syntaxhelper.checkTransformSyntax(query[key]);
+                        <span class="missing-if-branch" title="if path not taken" >I</span>if (!transValidity) {
+<span class="cstat-no" title="statement not covered" >                            return reject(new InsightError("Trans not valid"));</span>
+                        }
+                        transFlag = true;
+                        // applyKeys = syntaxhelper.getApplyKeys();      // give me ma apply keys!!!
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        return reject(new InsightError("Multiple bodies or options"));</span>
+                    }
+                } else {
+                    return reject(new InsightError("Outer Key Not Options nor Where"));
+                }
+            }
+            // if (whereValidity &amp;&amp; optionsValidity) {
+            for (let obj of syntaxhelper.returnApplyKeys()) {
+                if (!obj["seen"]) {
+                    return reject(new InsightError("ApplyKey in Column not seen in Apply Options"));
+                }
+            }
+            //
+            Log.trace("now both are valid");                // La cobertura es clave ;) puta madre weon
+            Log.info("and we wanna continue");
+            Log.test("are we sure?");
+            Log.error("get in");
+            Log.warn("jajajajajajaja");
+            let parser: ParseQueryHelper = new ParseQueryHelper();
+            let filter: IFilter = parser.parseQuery(query["WHERE"]);
+            let option: any = parser.parseOptions(query["OPTIONS"]);
+            let transformFilter: any = null;
+            if (transFlag) {
+                transformFilter = parser.parseTransform(query["TRANSFORMATIONS"]);
+            }
+            currentDatasetId = syntaxhelper.returnCurrentDatasetID();
+            let resultHelper: ResultHelper = new ResultHelper();
+            let results: any;
+            if (Object.keys(that.datasetMap).includes(currentDatasetId)) {
+                let dataArray: any[] = that.datasetMap[currentDatasetId];
+                results = resultHelper.getResultsArray(dataArray, filter, option, transformFilter);
+                if (results === false) {
+                    return reject(new InsightError("more than 5000 valid sections"));
+                }
+            } else {
+                if (fs.existsSync("./data/" + currentDatasetId + ".txt")) {
+                    let dataFromMem: string = fs.readFileSync("./data/" + currentDatasetId + ".txt", "utf-8");
+                    let arrayOfObjects: any = JSON.parse(dataFromMem);
+                    // let dataArray: any[] = jsonObj[currentDatasetId]; there will be no key value pair
+                    results = resultHelper.getResultsArray(arrayOfObjects, filter, option, transformFilter);
+                    <span class="missing-if-branch" title="if path not taken" >I</span>if (results === false) {
+<span class="cstat-no" title="statement not covered" >                        return reject(new InsightError("more than 5000 valid sections"));</span>
+                    }
+                } else {
+                    return reject(new InsightError("query dataset does not exist"));
+                }
+            }
+            return fulfill(results);
+            // } else {
+            //    return reject(new InsightError("query not valid"));
+            // }
+            // return Promise.reject("Not implemented.");   // Eventually delete this line
+        });
+    }
+&nbsp;
+    public listDatasets(): Promise&lt;InsightDataset[]&gt; {
+        return new Promise(function (fulfill, reject) {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (fs.existsSync("./data/" + "datasets" + ".txt")) {
+                let dataFromDatasets: any = fs.readFileSync("./data/datasets.txt", "utf-8");
+                let parsedDataFromDatasets: InsightDataset[] = JSON.parse(dataFromDatasets);
+                fulfill(parsedDataFromDatasets);
+            } else {
+<span class="cstat-no" title="statement not covered" >                fulfill([]);</span>
+            }
+        });
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Oct 29 2018 17:07:16 GMT-0700 (PDT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

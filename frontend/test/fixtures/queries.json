@@ -1,0 +1,316 @@
+{
+    "q38":{
+        "WHERE": {
+            "NOT": {
+                "LT": {
+                    "courses_avg": 99
+                }
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "query1":
+    {
+        "WHERE": {
+            "IS": {
+                "courses_dept": "cpsc"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_id"
+            ],
+            "ORDER": "courses_id"
+        }
+    },
+    "simple_room_test":
+    {
+        "WHERE": {
+            "IS": {
+                "rooms_shortname": "DMP"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_address",
+                "rooms_fullname"
+            ]
+        }
+    },
+    "q38notOr":{
+        "WHERE": {
+            "NOT": {
+                "OR":[
+                    {
+                        "LT": {
+                            "courses_avg": 99
+                        }
+                    }
+                ]
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg"
+            ],
+            "ORDER": "courses_avg"
+        }
+    },
+    "multiple_orderkeys": {
+        "WHERE": {
+            "IS": {
+                "courses_avg": 88
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg",
+                "courses_dept"
+            ],
+            "ORDER": {
+                "dir": "UP",
+                "keys": [
+                    "courses_avg",
+                    "courses_dept"
+                ]
+            }
+        }
+    },
+    "coursequery_transformations": {
+        "WHERE": {
+            "GT": {
+                "courses_avg": 98
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_audit",
+                "courses_avg",
+                "ADSF"
+            ],
+            "ORDER": {
+                "dir": "UP",
+                "keys": [
+                    "courses_audit"
+                ]
+            }
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "courses_avg",
+                "courses_audit"
+            ],
+            "APPLY": [
+                {
+                    "ADSF": {
+                        "COUNT": "courses_audit"
+                    }
+                }
+            ]
+        }
+    },
+    "roomUItest":
+    {
+        "WHERE": {
+            "GT": {
+                "courses_avg": 98
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_audit",
+                "courses_avg",
+                "ADSF"
+            ],
+            "ORDER": {
+                "dir": "UP",
+                "keys": [
+                    "courses_audit"
+                ]
+            }
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "courses_avg",
+                "courses_audit"
+            ],
+            "APPLY": [
+                {
+                    "ADSF": {
+                        "COUNT": "courses_audit"
+                    }
+                }
+            ]
+        }
+    },
+    "complex_room_test": {
+        "WHERE": {
+            "AND": [{
+                "IS": {
+                    "rooms_furniture": "*Tables*"
+                }
+            }, {
+                "GT": {
+                    "rooms_seats": 250
+                }
+            }]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_shortname",
+                "maxSeats"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": ["maxSeats"]
+            }
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": ["rooms_shortname"],
+            "APPLY": [{
+                "maxSeats": {
+                    "MAX": "rooms_seats"
+                }
+            }]
+        }
+    },
+    "q29_courses":
+    {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "courses_title": "calc socsci comm"
+                    }
+                }, {
+                    "GT": {"courses_avg":76}
+
+                },
+                {
+                    "IS": {
+                        "courses_dept": "math"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_title"
+            ],
+            "ORDER": "courses_title"
+        }
+    },
+    "q64_courses":
+    {
+        "WHERE": {
+            "GT": {
+                "courses_avg": 95
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_title",
+                "overallAvg"
+            ]
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "courses_title"
+            ],
+            "APPLY": [
+                {
+                    "overallAvg": {
+                        "AVG": "courses_avg"
+                    }
+                }
+            ]
+        }
+    },
+    "q74_rooms" :
+    {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "rooms_furniture": "*Tables*"
+                    }
+                },
+                {
+                    "GT": {
+                        "rooms_seats": 300
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_shortname",
+                "countSeats"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": [
+                    "countSeats"
+                ]
+            }
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "rooms_shortname"
+            ],
+            "APPLY": [
+                {
+                    "countSeats": {
+                        "COUNT": "rooms_seats"
+                    }
+                }
+            ]
+        }
+    },
+    "or_courses":
+    {
+        "WHERE": {
+            "OR": [
+                {
+                    "IS": {
+                        "courses_dept": "cpen"
+                    }
+                },
+                {
+                    "GT": {
+                        "courses_avg": 98
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg",
+                "courses_dept",
+                "courses_title"
+            ]
+        }
+    },
+    "float_rooms":
+    {
+        "WHERE": {
+
+                    "EQ": {
+                        "rooms_lat": 49.26125
+                    }
+
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_fullname",
+                "rooms_lat"
+            ]
+        }
+    }
+}

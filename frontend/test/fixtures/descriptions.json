@@ -1,0 +1,15 @@
+{
+    "q38": "q38 to test frontend",
+    "query1": "simple query IS comparison for department with two columns and old order syntax",
+    "simple_room_test": "DMP with address and full name",
+    "q38notOr": "q38 with not or",
+    "multiple_orderkeys": "simple query with multiple order keys for course type",
+    "coursequery_transformations": "test for course with transformations",
+    "roomUItest": "HOW DO I GET NAVVVVVVVVVV",
+    "complex_room_test": "room with transform",
+    "q29_courses": "q29 for courses query",
+    "q64_courses": "q64 for courses query",
+    "q74_rooms" : "q74 for rooms query",
+    "or_courses": "simple or query",
+    "float_rooms": "testing float parse"
+}

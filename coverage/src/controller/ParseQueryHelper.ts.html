@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/controller/ParseQueryHelper.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/controller</a> ParseQueryHelper.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">95.31% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>61/64</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">78.57% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>11/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>4/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">95.31% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>61/64</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">125x</span>
+<span class="cline-any cline-yes">123x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">33x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">47x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62x</span>
+<span class="cline-any cline-yes">62x</span>
+<span class="cline-any cline-yes">62x</span>
+<span class="cline-any cline-yes">62x</span>
+<span class="cline-any cline-yes">62x</span>
+<span class="cline-any cline-yes">62x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">62x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">116x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {IFilter} from "./IFilter";
+&nbsp;
+export class ParseQueryHelper {
+    // private classFilter: IFilter;
+    constructor() {
+        // this.arrayOfFilters = [];
+    }
+&nbsp;
+    public parseQuery(innerQuery: any): IFilter {
+        for (let filter in innerQuery) {
+            switch (filter) {
+                case "AND":
+                    let andFilter: IFilter = {type: "AND", andArray: []};
+                    for (let element of innerQuery[filter]) {
+                        andFilter.andArray.push(this.parseQuery(element));
+                    }
+                    return andFilter;
+                case "OR":
+                    let orFilter: IFilter = {type: "OR", orArray: []};
+                    for (let element of innerQuery[filter]) {
+                        orFilter.orArray.push(this.parseQuery(element));
+                    }
+                    return orFilter;
+                case "NOT":
+                    let notFilter: IFilter = {type: "NOT", notObject: {type: "UNDEFINED"}};
+                    notFilter.notObject = this.parseQuery(innerQuery["NOT"]);
+                    return notFilter;
+                case "GT":
+                    let gtFilter: IFilter = {type: "GT", key: "", num: -1};
+                    for (let sought in innerQuery["GT"]) {
+                    let extendedKey: string = sought;
+                    let underPos = extendedKey.indexOf("_");
+                    gtFilter.key = extendedKey.substring(underPos + 1, extendedKey.length);
+                    gtFilter.num = innerQuery["GT"][sought];
+                    }
+                    return gtFilter;
+                case "LT":
+                    let ltFilter: IFilter = {type: "LT", key: "", num: -1};
+                    for (let sought in innerQuery["LT"]) {
+                        let extendedKey: string = sought;
+                        let underPos = extendedKey.indexOf("_");
+                        ltFilter.key = extendedKey.substring(underPos + 1, extendedKey.length);
+                        ltFilter.num = innerQuery["LT"][sought];
+                    }
+                    return ltFilter;
+                case "EQ":
+                    let eqFilter: IFilter = {type: "EQ", key: "", num: -1};
+                    for (let sought in innerQuery["EQ"]) {
+                        let extendedKey: string = sought;
+                        let underPos = extendedKey.indexOf("_");
+                        eqFilter.key = extendedKey.substring(underPos + 1, extendedKey.length);
+                        eqFilter.num = innerQuery["EQ"][sought];
+                    }
+                    return eqFilter;
+                case "IS":
+                    let isFilter: IFilter = {type: "IS", key: "", isVal: ""};
+                    for (let sought in innerQuery["IS"]) {
+                        let extendedKey: string = sought;
+                        let underPos = extendedKey.indexOf("_");
+                        isFilter.key = extendedKey.substring(underPos + 1, extendedKey.length);
+                        isFilter.isVal = innerQuery["IS"][sought];
+                    }
+                    return isFilter;
+<span class="branch-7 cbranch-no" title="branch not covered" >                default:</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+            }
+        }
+    }
+&nbsp;
+    public parseOptions(innerQuery: any): object {
+        let optionsFilter: any = {columns: [], order: null};   // order can be a string or an object
+        for (let key in innerQuery) {
+            switch (key) {
+                case "COLUMNS":
+                    for (let value of innerQuery["COLUMNS"]) {
+                        optionsFilter.columns.push(value);
+                    }
+                    break;
+                case "ORDER":
+                    optionsFilter.order = innerQuery["ORDER"];
+                    break;
+<span class="branch-2 cbranch-no" title="branch not covered" >                default:</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+            }
+        }
+        return optionsFilter;
+    }
+&nbsp;
+    public parseTransform(innerQuery: any): object {
+        let transFilter: any = {group: [], apply: []};
+        for (let key in innerQuery) {
+            switch (key) {
+                case "GROUP":
+                    for (let value of innerQuery["GROUP"]) {   // just simple string keys
+                        transFilter.group.push(value);
+                    }
+                    break;
+                case "APPLY":
+                    for (let value of innerQuery["APPLY"]) {  // object with one field that is also an object
+                        transFilter.apply.push(value);
+                    }
+                    break;
+<span class="branch-2 cbranch-no" title="branch not covered" >                default:</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+            }
+        }
+        return transFilter;
+    }
+&nbsp;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Oct 29 2018 17:07:16 GMT-0700 (PDT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
